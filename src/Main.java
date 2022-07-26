@@ -64,8 +64,10 @@ public class Main {
         System.out.println("Enter phone number: \r");
         String number = scanner.nextLine();
         Contact contact = Contact.createContact(name, number);
-        if (mobilePhone.addNewContact(contact)) System.out.println("New contact named " + contact.getName() + " added successfully.");
-        else System.out.println("Unable to add new contact. Contact named " + contact.getName() + " already exists.");
+        if (mobilePhone.addNewContact(contact)) System.out.println(
+                "New contact named " + contact.getName() + " added successfully.");
+        else System.out.println("Unable to add new contact. Contact named " +
+                contact.getName() + " already exists.");
     }
 
     public static void updateCont() {
@@ -91,8 +93,10 @@ public class Main {
             System.out.println("Enter new phone number: \r");
             String newNum = scanner.nextLine();
             Contact newCont = Contact.createContact(newName, newNum);
-            if (mobilePhone.queryContact(newCont) != null) System.out.println("Unable to update contact. Contact named " + newCont.getName() + " already exists.");
-            else if (mobilePhone.updateContact(contact, newCont)) System.out.println("Contact successfully updated.");
+            if (mobilePhone.queryContact(newCont) != null) System.out.println(
+                    "Unable to update contact. Contact named " + newCont.getName() + " already exists.");
+            else if (mobilePhone.updateContact(contact, newCont)) System.out.println(
+                    "Contact successfully updated.");
             else System.out.println("Error while updating contact.");
         } else System.out.println(nonExistentAnswer);
     }
