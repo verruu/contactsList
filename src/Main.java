@@ -65,20 +65,34 @@ public class Main {
         String number = scanner.nextLine();
         Contact contact = Contact.createContact(name, number);
         if (mobilePhone.addNewContact(contact)) System.out.println("New contact named " + contact.getName() + " added successfully.");
-        else System.out.println("Contact named " + contact.getName() + " already exists.");
+        else System.out.println("Unable to add new contact. Contact named " + contact.getName() + " already exists.");
     }
 
     public static void updateCont() {
-        System.out.println("Enter name of the contact you want to update: \r");
+        System.out.println("Enter name/position of the contact you want to update: \r");
         String name = scanner.nextLine();
-        Contact oldCont = mobilePhone.queryContact(name);
-        if (oldCont != null) {
+        int position;
+        try {position = Integer.parseInt(name);}
+        catch (NumberFormatException e) {position = -1;}
+
+        if (position > 0 && position <= mobilePhone.arrSize()) {
+            Contact oldCont = mobilePhone.queryContact(position - 1);
+            updateContactCopy(oldCont);
+        } else {
+            Contact oldCont = mobilePhone.queryContact(name);
+            updateContactCopy(oldCont);
+        }
+    }
+
+    public static void updateContactCopy(Contact contact) {
+        if (contact != null) {
             System.out.println("Enter new name: \r");
             String newName = scanner.nextLine();
             System.out.println("Enter new phone number: \r");
             String newNum = scanner.nextLine();
             Contact newCont = Contact.createContact(newName, newNum);
-            if (mobilePhone.updateContact(oldCont, newCont)) System.out.println("Contact successfully updated.");
+            if (mobilePhone.queryContact(newCont) != null) System.out.println("Unable to update contact. Contact named " + newCont.getName() + " already exists.");
+            else if (mobilePhone.updateContact(contact, newCont)) System.out.println("Contact successfully updated.");
             else System.out.println("Error while updating contact.");
         } else System.out.println(nonExistentAnswer);
     }
@@ -86,9 +100,22 @@ public class Main {
     public static void remCont() {
         System.out.println("Enter name of the contact you want to remove: \r");
         String name = scanner.nextLine();
-        Contact rmCont = mobilePhone.queryContact(name);
-        if (rmCont != null) {
-            if (mobilePhone.removeContact(rmCont)) System.out.println("Contact removed successfully.");
+        int position;
+        try {position = Integer.parseInt(name);}
+        catch (NumberFormatException e) {position = -1;}
+
+        if (position > 0 && position <= mobilePhone.arrSize()) {
+            Contact remCont = mobilePhone.queryContact(position - 1);
+            remContCopy(remCont);
+        } else {
+            Contact remCont = mobilePhone.queryContact(name);
+            remContCopy(remCont);
+        }
+    }
+
+    public static void remContCopy(Contact contact) {
+        if (contact != null) {
+            if (mobilePhone.removeContact(contact)) System.out.println("Contact removed successfully.");
             else System.out.println("Error while removing contact.");
         } else System.out.println(nonExistentAnswer);
     }

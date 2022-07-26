@@ -65,6 +65,15 @@ public class MobilePhone {
         if (findContact(contact) != -1) return contact.getName();
         else return null;
     }
+
+    public Contact queryContact(int i) {
+        return this.myContacts.get(i);
+    }
+
+    public int arrSize() {
+        return this.myContacts.size();
+    }
+
     //    print contacts pattern: 1. name -> phoneNumber
     public void printContacts() {
         for (int i = 0; i < this.myContacts.size(); i++) {
